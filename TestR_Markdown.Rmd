@@ -59,3 +59,53 @@ Make a time series plot (of type 1) the 5-minute interval (x-axis)and the averag
 fivemin <- aggregate(steps ~ interval, data = DataFrame, FUN = mean, na.rm = TRUE)
 plot (x = fivemin$interval, y = fivemin$steps, type = "l", main = "5-minute interval")
 ```
+
+
+# Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+```{r}
+five_min_maxsteps <- fivemin$interval[which.max(fivemin$steps)]
+five_min_maxsteps
+```
+
+# Imputing missing values
+Calculate and report the total number of missing values in the dataset
+Install tidyverse to replace missing values
+Duplicate the dataset
+```{r}
+activity2 <- DataFrame
+```
+#Identify missing values of steps in the duplicated DataFrame
+```{r}
+nas <- is.na(activity2$steps)
+sum(is.na(activity2))
+```
+
+replace missing value with in activyt2
+```{r}
+avg_interval <- tapply(activity2$steps, activity2$interval, mean, na.rm=TRUE, simplify = TRUE)
+```
+
+# Make a panel plot containing a time series plot (-= L) of the 5-minute interval 
+(x-axis) and the average number of steps taken, 
+averaged across all weekday days or weekend days (y-axis). 
+create number of steps per date from dataset with replaced NM values
+```{r}
+totalstepsperday2 <- aggregate(steps ~ date, data = DataFrame, FUN = sum, na.rm = TRUE)
+```
+
+#setup frame for two graphs
+```{r}
+par(mfrow=c(1,2))
+```
+## Histogram with the orginal dataset
+```{r}
+hist(totalstepsperday$steps, 
+     main="Total Steps per Day (Original)", 
+     breaks=100)
+
+hist(totalstepsperday2$steps, 
+     main = "Total Steps per Day (no-NA)", 
+     breaks=100)
+```
+
+
