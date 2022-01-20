@@ -10,15 +10,18 @@ I used I used the info [here](https://rpubs.com/sureshbk/358994) and [here](http
 setwd ("C:/Users/Charlotte/Documents/GitHub/RepData_PeerAssessment1")
 ```
 
-And I open/load the file
+# Open/load the file
 ```{r}
 DataFrame <- read.csv( "activity.csv")
 ```
 
-spent an hr with errors trying to figure out how install packages in Kniter until I figure out on the net U don't. Why wouldn't the lectures cover that ... Wow?
+spent an hr with errors trying to figure out how install packages in Kniter until I figure out on the net U don't. Why wouldn't the lectures cover that ... Wow? I used 
+1. install.packages("dplyr")
+2. install.packages("ggplot2") 
+3. install.packages("magrittr")
+4. library(tidyverse)
 
-
-# 1 Calculate the total number of steps taken per day?
+# Calculate the total number of steps taken per day?
 Get number of steps per date and sum results removing null
 ```{r}
 totalstepsperday <- aggregate(steps ~ date, data = DataFrame, FUN = sum, na.rm = TRUE)
@@ -35,8 +38,24 @@ hist(totalstepsperday$steps, main = "steps per Day", breaks = 10)
 ```
 
 
+# Calculate and report the mean and median total number of steps taken per day.
+calculate the mean:
+```{r}
+mean_steps <- mean(totalstepsperday$steps)
+mean_steps
+```
+#Calculate median
+```{r}
+median_steps <- median(totalstepsperday$steps)
+median_steps
+```
 
+# NEXT What is the average daily activity pattern?
+Make a time series plot (of type 1) the 5-minute interval (x-axis)and the average number of steps taken, averaged across all days (y-axis).
 
-
-
-
+#Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+#From the DataFrame create dataset making Steps a dependent variable of interval 
+```{r}
+fivemin <- aggregate(steps ~ interval, data = DataFrame, FUN = mean, na.rm = TRUE)
+plot (x = fivemin$interval, y = fivemin$steps, type = "l", main = "5-minute interval")
+```
